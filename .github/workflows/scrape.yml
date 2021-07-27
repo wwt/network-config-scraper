@@ -34,6 +34,9 @@ jobs:
     - name: Fetch latest configs
       run: |-
         python retrieve_configs.py
+      env:
+        SSH_AUTH_USERNAME: ${{ secrets.SSH_AUTH_USERNAME }}
+        SSH_AUTH_PASSWORD: ${{ secrets.SSH_AUTH_PASSWORD }}
 
     - name: Commit and push if it changed
       run: |-

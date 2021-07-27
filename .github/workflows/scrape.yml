@@ -2,11 +2,13 @@ name: scrape network configs
 
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 
 jobs:
-  scheduled:
+  build:
     runs-on: [self-hosted, ubuntu1804atc-runner01]
     steps:
     - name: Check out this repo

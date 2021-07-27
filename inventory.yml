@@ -1,0 +1,18 @@
+
+devices:
+  - hostname: rtr-core
+    host: 10.255.70.234
+    platform: cisco_iosxe
+  - hostname: rtr-branch2
+    host: 10.255.70.232
+    platform: cisco_iosxe
+  - hostname: rtr-branch1
+    host: 10.255.70.252
+    platform: cisco_iosxe
+  - hostname: rtr-branch3
+    host: 10.255.70.216
+    platform: cisco_iosxe
+
+transport:
+  auth_strict_key: false
+  transport: asyncssh

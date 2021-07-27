@@ -5,10 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
-
+  schedule:
+    - cron:  '*/30 * * * *'
 
 jobs:
-  build:
+  scheduled:
     runs-on: [self-hosted, ubuntu1804atc-runner01]
     steps:
     - name: Check out this repo

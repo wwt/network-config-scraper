@@ -12,6 +12,9 @@ import yaml
 from scrapli import AsyncScrapli
 
 
+OUTPUT_DIR = Path("configs")
+
+
 async def gather_config(
     device: t.Dict, config_type: str = "running"
 ) -> t.Tuple[str, str]:
@@ -31,7 +34,7 @@ async def gather_config(
     prompt_result = await conn.get_prompt()
     version_result = await conn.send_command(f"show {config_type}-config")
     await conn.close()
-    return prompt_result, version_result
+    return prompt_result[:-1], version_result
 
 
 async def main(inventory: t.Dict) -> None:
@@ -54,9 +57,13 @@ async def main(inventory: t.Dict) -> None:
     tasks = [gather_config(device) for device in devices]
     results = await asyncio.gather(*tasks)
 
+    # ensure output directory exists
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # write results to file
     for hostname, config in results:
-        filepath = Path(f"{hostname}-running_config.txt")
-        print(f"saving: {hostname}")
+        filepath = OUTPUT_DIR / f"{hostname}-running_config.txt"
+        print(f"saving: {filepath}")
         Path(filepath).write_text(config.result)
 
 

@@ -1,4 +1,8 @@
-"""examples.async_usage.async_multiple_connections"""
+"""
+Script to collect running and startup configs from devices
+
+Author: Tafsir Thiam; ttafsir@gmail.com
+"""
 import asyncio
 import os
 from pathlib import Path
@@ -8,19 +12,34 @@ import yaml
 from scrapli import AsyncScrapli
 
 
-async def gather_version(device: t.Dict) -> t.Tuple[str, str]:
-    """Simple function to open a connection and get some data"""
+async def gather_config(
+    device: t.Dict, config_type: str = "running"
+) -> t.Tuple[str, str]:
+    """Function to gather version from device
+
+    :param device: device data with device details
+    :type device: t.Dict
+    :return: hostname and config
+    :rtype: t.Tuple[str, str]
+    """
+    if config_type not in ("running", "startup"):
+        raise ValueError("config_type must be 'running' or 'startup'")
+
     device.pop("hostname")
     conn = AsyncScrapli(**device)
     await conn.open()
     prompt_result = await conn.get_prompt()
-    version_result = await conn.send_command("show running-config")
+    version_result = await conn.send_command(f"show {config_type}-config")
     await conn.close()
     return prompt_result, version_result
 
 
 async def main(inventory: t.Dict) -> None:
-    """Function to gather coroutines, await them and print results"""
+    """Function to gather data from multiple devices
+
+    :param inventory: inventory data with device details
+    :type inventory: t.Dict
+    """
     devices = inventory.get("devices", [])
     for device in devices:
         device.update(
@@ -32,8 +51,9 @@ async def main(inventory: t.Dict) -> None:
             }
         )
 
-    tasks = [gather_version(device) for device in devices]
+    tasks = [gather_config(device) for device in devices]
     results = await asyncio.gather(*tasks)
+
     for hostname, config in results:
         filepath = Path(f"{hostname}-running_config.txt")
         print(f"saving: {hostname}")

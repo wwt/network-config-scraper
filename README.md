@@ -1,22 +1,26 @@
 # Network Config Scraper
 
-This repository demonstrates the use of Github Actions and `git-scraping` to build an automated backup solution for network configuration files. The `scrape.yml` action runs on a schedule, and it uses the `retrieve_configs.py` script to fetch configurations from network devices and creates a commit if any changes are detected. This approach is heavily inspired by [Git scraping: track changes over time by scraping to a Git repository](https://simonwillison.net/2020/Oct/9/git-scraping/)  by Simon Willison.
+This repository demonstrates the use of Github Actions and `git-scraping` to build an automated backup solution for network configuration files. **Git** already provides an efficient way to track and manage changes to textual data, and Github Actions provide automation that we can use to fetch and process configuration backups without reliance on any additional infrastructure. The solution in this repository uses both to retrieve configurations from network devices on a defined schedule and commits the detected changes back to the repository.
 
-![config scraper (1)](https://user-images.githubusercontent.com/7189920/127178866-1fee3988-fd0c-4fed-9097-91d2acedfe92.png)
+This approach is heavily inspired by [Git scraping: track changes over time by scraping to a Git repository](https://simonwillison.net/2020/Oct/9/git-scraping/)  by Simon Willison. His post provides an excellent overview of git-scraping data from various sources on the Internet.
 
-## Why should I use this?
+![config scraper](https://user-images.githubusercontent.com/7189920/127345302-e08d8144-2c97-40b3-973c-637fe0933220.png)
 
-Because of the textual nature of network configurations, git-scraping offers a simple yet effective way to backup and version configuration data. It runs entirely on GitHub Actions, so there's no complex infrastructure or orchestrations to manage. The action fetches configurations for devices you specify in the `inventory.yml` file using a simple script in the root of this repo. If any changes are detected, the new data is committed to the repository with a commit message that can be customized to reflect the latest changes. The action can also be triggered manually as need.
+## Could I use this?
 
-## What about my other systems?
+Because of the textual nature of network configurations, git-scraping offers a simple yet effective way to backup and version configuration data. It runs entirely on GitHub Actions, so there's no complex infrastructure or orchestrations to manage.
 
-Using the webhooks capability of Github can extend this solution by allowing you to build or set up integrations to external automation systems which can subscribe to certain events on the repository. For example, if new commits are made, you can trigger an HTTP POST to a system like Ansible Tower to provide additional automation.
+Because the data we retrieve data from devices in a private lab, the repository uses a self-hosted runner that makes a connection to Github and has access to the lab. You'd have to decide if this is an acceptable model for your environment.
+
+However, the solution works wonderfully and can be extended to fit into your existing automation. For example, using the webhooks in Github can extend this solution by allowing you to build or set up integrations to external automation systems which can subscribe to certain events on the repository. The configured events can trigger an HTTP POST to a system like Ansible Tower to provide additional automation.
 
 ## How does it work?
 
+The configuration scraper is configured and scheduled in the [.github/workflows/scrape.yml](.github/workflows/scrape.yml) action workflow. It's a short and simple workflow that defines all the triggers and steps to run our automation.
+
 ### trigger
 
-The configuration scraper is configured and scheduled in the [.github/workflows/scrape.yml](.github/workflows/scrape.yml) action workflow. The workflow can be triggered in 3 different ways: on a push event to the repo, manually using the `workflow_dispatch`, or, most importantly, on a cron schedule. For example, in the snippet below, you can see that we have the workflow triggered every 30 minutes.
+The workflow can be triggered in 3 different ways: on a push event to the repo, manually using the `workflow_dispatch`, or, most importantly, on a cron schedule. For example, in the snippet below, you can see that we have the workflow triggered every 30 minutes.
 
 ```yaml
 on:

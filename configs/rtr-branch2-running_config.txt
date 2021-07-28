@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4050 bytes
+Current configuration : 4097 bytes
 !
-! Last configuration change at 00:13:42 UTC Tue Jul 27 2021
+! Last configuration change at 13:46:48 UTC Tue Jul 27 2021 by cisco
 !
 version 17.3
 service timestamps debug datetime msec
@@ -158,6 +158,7 @@ interface GigabitEthernet3
  no mop sysid
 !
 interface GigabitEthernet4
+ description OOB MANAGEMENT INTERFACE
  ip vrf forwarding mgmt
  ip address dhcp
  negotiation auto

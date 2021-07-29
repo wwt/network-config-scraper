@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4549 bytes
+Current configuration : 4615 bytes
 !
-! Last configuration change at 12:32:53 UTC Thu Jul 29 2021 by cisco
+! Last configuration change at 12:37:29 UTC Thu Jul 29 2021 by cisco
 !
 version 17.3
 service timestamps debug datetime msec
@@ -138,21 +138,21 @@ redundancy
 !
 interface GigabitEthernet1
  description Connection to rtr-branch1
- no ip address
+ ip address 10.1.1.1 255.255.255.252
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet2
  description Connection to rtr-branch2
- no ip address
+ ip address 10.1.2.1 255.255.255.252
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
  description Connection to rtr-branch3
- no ip address
+ ip address 10.1.3.1 255.255.255.252
  negotiation auto
  no mop enabled
  no mop sysid

@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4485 bytes
+Current configuration : 4863 bytes
 !
-! Last configuration change at 13:45:57 UTC Tue Jul 27 2021 by cisco
+! Last configuration change at 04:16:36 UTC Thu Jul 29 2021 by cisco
 !
 version 17.3
 service timestamps debug datetime msec
@@ -209,6 +209,14 @@ control-plane
 !
 !
 !
+banner motd ^C
+UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+
+You must have explicit, authorized permission to access or configure this device.
+Unauthorized attempts and actions to access or use this system may result in civil
+and/or criminal penalties. All activities performed on this device are logged and
+monitored.
+^C
 !
 line con 0
  login local
@@ -224,6 +232,8 @@ call-home
  profile "CiscoTAC-1"
   active
   destination transport-method http
+ntp source GigabitEthernet4
+ntp server time.nist.gov
 !
 !
 !

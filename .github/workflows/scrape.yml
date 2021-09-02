@@ -10,7 +10,7 @@ on:
 
 jobs:
   scheduled:
-    runs-on: [self-hosted, ubuntu1804atc-runner01]
+    runs-on: [self-hosted, atc-runners]
     steps:
     - name: Check out this repo
       uses: actions/checkout@v2

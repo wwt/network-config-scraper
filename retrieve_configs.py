@@ -18,7 +18,7 @@ OUTPUT_DIR = Path("configs")
 async def gather_config(
     device: t.Dict, config_type: str = "running"
 ) -> t.Tuple[str, str]:
-    """Function to gather version from device
+    """Function to retrieve device configurations
 
     :param device: device data with device details
     :type device: t.Dict
@@ -38,7 +38,7 @@ async def gather_config(
 
 
 async def main(inventory: t.Dict) -> None:
-    """Function to gather data from multiple devices
+    """Gather data from multiple devices defined in inventory
 
     :param inventory: inventory data with device details
     :type inventory: t.Dict

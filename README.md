@@ -69,3 +69,7 @@ For data gathering, the `retrieve_configs.py` script is used to retrieve and sav
 ## How do I track changes?
 
 The neat thing about using **Git** to manage your configuration backups is that you get this [commit log](https://github.com/wwt/network-config-scraper/commits/main/configs) showing the history of commits that have been made to your configs.
+
+## Author(s)
+
+* Tafsir Thiam - @ttafsir - tafsir.thiam@wwt.com

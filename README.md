@@ -41,7 +41,7 @@ Within the action workflow, the only things to specify are the fact that we're u
 ```yaml
 jobs:
   scheduled:
-    runs-on: [self-hosted, ubuntu1804atc-runner01]
+    runs-on: [self-hosted, atc-runners]
 ```
 
 ## data

@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 5173 bytes
+Current configuration : 5212 bytes
 !
-! Last configuration change at 21:59:50 UTC Fri Sep 10 2021 by cisco
+! Last configuration change at 22:09:27 UTC Fri Sep 10 2021 by cisco
 !
 version 17.3
 service timestamps debug datetime msec
@@ -198,6 +198,7 @@ router ospf 1
  area 0 capability default-exclusion
  area 0 authentication
  passive-interface default
+ no passive-interface GigabitEthernet1
  no passive-interface GigabitEthernet2
  no passive-interface GigabitEthernet3
  network 10.1.3.0 0.0.0.3 area 0

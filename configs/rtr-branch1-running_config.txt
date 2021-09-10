@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4513 bytes
+Current configuration : 4600 bytes
 !
-! Last configuration change at 19:29:19 UTC Fri Sep 10 2021 by cisco
+! Last configuration change at 19:52:40 UTC Fri Sep 10 2021 by cisco
 !
 version 17.3
 service timestamps debug datetime msec
@@ -164,6 +164,10 @@ interface GigabitEthernet4
  negotiation auto
  no mop enabled
  no mop sysid
+!
+router ospf 1
+ max-metric router-lsa on-startup 110
+ network 10.1.1.0 0.0.0.3 area 0
 !
 ip forward-protocol nd
 no ip http server
